@@ -1,0 +1,33 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: aliceblue;
+}
+
+.nav{
+    border: 2px solid;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#main{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2 , 1fr);
+    justify-content: center;
+}
+
+
+.continer{
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3 , 1fr);
+}
+.img{
+     
+    grid-area: 1/1/2/2;
+}
+
+ 
