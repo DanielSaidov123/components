@@ -18,7 +18,7 @@ body {
   height: 3rem;
   border-radius: 20px;
 }
-#main {
+#home {
   display: grid;
   grid-template-columns: repeat(2, 400px);
   grid-template-rows: repeat(2, 400px);
@@ -68,5 +68,7 @@ img {
   padding: 40px;
   font-size: 26px;
   cursor: pointer;
+  margin-left: 15%;
+  width: 70%;
   
 }

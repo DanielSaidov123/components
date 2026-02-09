@@ -26,12 +26,12 @@ btn2.href = btn1;
 btn1.textContent = 'blabla'
 btn2.textContent = 'bla'
 
-root = btn1;
+root = btn2;
 container.append(root);
 
     container.addEventListener('click', (e) => {
         if(e.target.tagName !== 'BUTTON') return;
-
+        
         root.replaceWith(e.target.href);
         console.log(e.target.href);
         
