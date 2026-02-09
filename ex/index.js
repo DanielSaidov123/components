@@ -1,34 +1,45 @@
 const main = document.getElementById("main");
-
-function d(title, h1, p) {
-  const continer = document.createElement("div");
-  continer.classList = 'continer'
-   const img = document.createElement("img");
-  img.src="https://fastly.picsum.photos/id/29/400/400.jpg?hmac=JmRg5v6v6WI2S_QaQoVHTErlKvqRoDGMzzPtVN3EWc4" ;
-  img.classList = 'img'
-  continer.append(img);
+let originalMain = null;
+const arr = [];
+let root;
+function d(title, h1, p, imgg, id) {
+  const container = document.createElement("div");
+  container.classList = "continer";
+  container.id = id;
+  const img = document.createElement("img");
+  img.src = imgg;
+  img.classList = "img";
+  container.append(img);
   const divtitle = document.createElement("div");
   divtitle.textContent = title;
-  continer.append(divtitle);
+  divtitle.classList = "divtitle";
+  container.append(divtitle);
   const divh1 = document.createElement("h1");
   divh1.textContent = h1;
-  continer.append(divh1);
+  divh1.classList = "divh1";
+  container.append(divh1);
   const divp = document.createElement("p");
   divp.textContent = p;
-  continer.append(divp);
-  main.append(continer);
+  divp.classList = "p";
+  container.append(divp);
+  root = container;
+  arr.push(container);
+  main.append(root);
+  attachOpenBehavior(container);
 }
 
-async function fetchDataWrapper() {
+async function fetchDataWrapper(num) {
   try {
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+    const res = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${num}`,
+    );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
 
     const data = await res.json();
     console.log(data);
-    
+
     return data;
   } catch (error) {
     console.error("Could not fetch data:", error);
@@ -36,11 +47,33 @@ async function fetchDataWrapper() {
 }
 
 async function createData() {
-  const data1 = await fetchDataWrapper();
-  const data2 = await fetchDataWrapper();
-
-  if (data1) d(data1.userId, data1.title, data1.completed);
-  if (data2) d(data2.userId, data2.title, data2.completed);
+  for (let i = 1; i < 5; i++) {
+    const data1 = await fetchDataWrapper(i);
+    if (data1)
+      d(
+        data1.userId,
+        data1.title,
+        data1.completed,
+        `https://picsum.photos/400/400?random=${i}`,
+        `id${i}`,
+      );
+  }
 }
+function attachOpenBehavior(container) {
+  container.addEventListener("click", () => {
+    if (!originalMain) {
+      originalMain = main.cloneNode(true);
 
+      const bigPost = container.cloneNode(true);
+      bigPost.classList.add("big");
+    
+      main.replaceWith(bigPost);
+
+      bigPost.addEventListener("click", () => {
+        bigPost.replaceWith(originalMain);
+        originalMain = null;
+      });
+    }
+  });
+}
 createData();

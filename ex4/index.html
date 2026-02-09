@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ReplaceWith Demo</title>
+
+    <style>
+      #container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .post {
+        background: #ddd;
+        padding: 20px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .big {
+        background: #eee;
+        padding: 40px;
+        font-size: 26px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <article class="post">כתבה 1</article>
+      <article class="post">כתבה 2</article>
+    </div>
+
+    <script>
+      const container = document.getElementById("container");
+      console.log(container);
+
+      const posts = document.querySelectorAll(".post");
+      console.log(posts);
+
+      for (let i = 0; i < posts.length; i++) {
+        posts[i].addEventListener("click", function () {
+          // שומר את הגריד המקורי
+          const original = container.cloneNode(true);
+
+          // יוצר כתבה גדולה
+          const bigPost = posts[i].cloneNode(true);
+          bigPost.className = "big";
+
+          // מחליף את הגריד בכתבה
+          container.replaceWith(bigPost);
+
+          // לחיצה על הגדולה מחזירה לגריד
+          bigPost.addEventListener("click", function () {
+            bigPost.replaceWith(original);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
